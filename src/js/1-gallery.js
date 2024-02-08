@@ -81,4 +81,8 @@ function imagesTemplite() {
 }
 const markup = imagesTemplite();
 galleryElem.innerHTML = markup;
-const lightbox = new SimpleLightbox('.js-gallery a');
+const lightbox = new SimpleLightbox('.js-gallery a', {
+  captionsData: 'alt',
+  captionDelay: 250,
+  captionPosition: 'bottom',
+});
