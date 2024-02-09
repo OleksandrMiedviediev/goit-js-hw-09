@@ -2,9 +2,10 @@ const formElem = document.querySelector('.feedback-form');
 
 function handleInput(event) {
   const { name, value } = event.target;
+  const trimmedValue = value.trim();
   const formData =
     JSON.parse(localStorage.getItem('feedback-form-state')) || {};
-  formData[name] = value;
+  formData[name] = trimmedValue;
   localStorage.setItem('feedback-form-state', JSON.stringify(formData));
 }
 
@@ -23,11 +24,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
 formElem.addEventListener('submit', event => {
   event.preventDefault();
+  const emailValue = formElem.querySelector('[name="email"]').value;
+  const messageValue = formElem.querySelector('[name="message"]').value;
+
+  if (emailValue.trim() === '' || messageValue.trim() === '') {
+    alert('Пожалуйста, заполните все поля формы.');
+    return;
+  }
+
   localStorage.removeItem('feedback-form-state');
   formElem.reset();
   const formData = {
-    email: formElem.querySelector('[name="email"]').value,
-    message: formElem.querySelector('[name="message"]').value,
+    email: emailValue,
+    message: messageValue,
   };
   console.log(formData);
 });
